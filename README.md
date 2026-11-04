@@ -1,5 +1,7 @@
 # utm-keeper
 
+**English** · [Русский](README.ru.md)
+
 Keep campaign tags across pages and carry them into every form.
 
 **654 bytes min+gzip** (1,156 bytes minified ESM). Zero runtime dependencies. ESM, CommonJS and TypeScript declarations.
