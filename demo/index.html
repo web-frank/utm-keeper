@@ -1,0 +1,65 @@
+<!doctype html>
+<!--
+MIT License
+
+Copyright (c) 2026 Daniel Raskopin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>utm-keeper — live demo</title><style>
+:root{font:16px/1.55 system-ui,sans-serif;color:#18312e;background:#f3f5ee;color-scheme:light}*{box-sizing:border-box}body{margin:0}main{max-width:850px;margin:60px auto;padding:0 24px}header{margin-bottom:30px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:12px;color:#48665d}h1{font-size:clamp(36px,7vw,60px);line-height:1.1;letter-spacing:-.045em;margin:12px 0}h2{font-size:19px}p{max-width:70ch}.muted{color:#506860}.card{background:white;border:1px solid #d8e1d5;border-radius:18px;padding:24px;margin:20px 0;box-shadow:0 8px 28px #16332d08}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}button,.button{font:inherit;cursor:pointer;background:#165d49;color:white;border:0;padding:10px 17px;border-radius:8px;text-decoration:none;display:inline-block}button.secondary{background:#e6eee5;color:#18312e}button:hover,.button:hover{filter:brightness(.94)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #d88326;outline-offset:3px}input,select{font:inherit;border:1px solid #b3c5b8;border-radius:6px;padding:8px;max-width:100%;background:white;color:inherit}label{display:block}pre,code{font-family:ui-monospace,monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5ef;padding:16px;border-radius:8px}a{color:#165d49}footer{font-size:13px;color:#506860;margin:32px 0}.status{font-size:28px;font-weight:650;margin:10px 0}.success{color:#176140}.error{color:#9c3527}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:10px 6px;border-bottom:1px solid #e0e7dc}td input:not([type=checkbox]){width:100%}.scroll{overflow-x:auto}progress{width:100%;accent-color:#165d49}output{display:block}.badge{background:#e9f0e4;padding:3px 9px;border-radius:20px;font-size:13px}noscript{display:block;color:#9c3527}
+</style></head>
+<body><main><header><span class="eyebrow">roitrail / standalone libraries</span><h1>utm-keeper</h1><p class="muted">Keep campaign tags across pages and carry them into every form.</p><span class="badge">Offline demo · No dependencies</span></header>
+<noscript>Enable JavaScript to run this demo.</noscript>
+
+<section class="card"><h2>1. Arrive with campaign tags</h2><p>Open this file with <code>?utm_source=test&amp;gclid=123</code>, or use the sample link.</p>
+<div class="row"><a id="sample" class="button" href="?utm_source=test&amp;gclid=123">Open tagged example</a><a id="untagged" href="?">Visit without tags</a></div>
+<h2>Saved tags</h2><pre id="tags" aria-live="polite"></pre><p id="storage" class="muted"></p></section>
+<section class="card"><h2>2. Inspect a form</h2><form id="example"><label>Demo message <input name="message" value="Demo inquiry"></label><p><button type="submit">Preview submission</button></p></form>
+<p>The library added these hidden fields:</p><pre id="hidden"></pre><output id="submission" aria-live="polite"></output></section>
+<p class="muted">Tagged arrivals replace the saved set; untagged pages keep it. File-page localStorage support varies by browser. If blocked, tags remain available on this page only. This form previews data locally.</p>
+
+<footer>MIT © 2026 Daniel Raskopin · Part of <a href="https://github.com/web-frank/roitrail">roitrail</a>.<br>This file includes the library; no install, server or build is needed.</footer>
+</main><script>
+/*! MIT © 2026 Daniel Raskopin. Embedded library generated from src/index.ts. */
+/* BEGIN EMBEDDED LIBRARY */
+"use strict";var Library=(()=>{var i=Object.defineProperty;var l=Object.getOwnPropertyDescriptor;var y=Object.getOwnPropertyNames;var b=Object.prototype.hasOwnProperty;var O=(e,t)=>{for(var n in t)i(e,n,{get:t[n],enumerable:!0})},h=(e,t,n,s)=>{if(t&&typeof t=="object"||typeof t=="function")for(let r of y(t))!b.call(e,r)&&r!==n&&i(e,r,{get:()=>t[r],enumerable:!(s=l(t,r))||s.enumerable});return e};var T=e=>h(i({},"__esModule",{value:!0}),e);var S={};O(S,{get:()=>d,utmKeeper:()=>j});var E=["utm_source","utm_medium","utm_campaign","utm_term","utm_content","utm_id","gclid","yclid","fbclid"],c=new Map,m=({storageKey:e="utm-keeper"})=>e;function p(e){return Object.fromEntries(E.flatMap(t=>e&&typeof e=="object"&&Object.prototype.hasOwnProperty.call(e,t)&&typeof e[t]=="string"&&e[t]?[[t,e[t]]]:[]))}function d(e={}){let t=m(e);if(c.has(t))return{...c.get(t)};try{return p(JSON.parse(localStorage.getItem(t)||"{}"))}catch{return{}}}function j(e={}){if(typeof document>"u")return()=>{};let t=m(e),n=p(Object.fromEntries(new URLSearchParams(location.search)));if(Object.keys(n).length)try{localStorage.setItem(t,JSON.stringify(n)),c.delete(t)}catch{c.set(t,n)}let s=()=>{let f=d(e);for(let a of document.forms)for(let[u,g]of Object.entries(f)){let o=a.querySelector(`input[name="${u}"]`);o&&o.type!=="hidden"||(o||(o=document.createElement("input"),o.type="hidden",o.name=u,a.append(o)),o.value=g)}};s();let r=new MutationObserver(s);return r.observe(document.documentElement,{childList:!0,subtree:!0}),document.addEventListener("submit",s,!0),()=>{r.disconnect(),document.removeEventListener("submit",s,!0)}}return T(S);})();
+/* END EMBEDDED LIBRARY */
+</script><script>
+
+const tagged = new URL(location.href); tagged.search = '?utm_source=test&gclid=123'; tagged.hash = '';
+const plain = new URL(location.href); plain.search = ''; plain.hash = '';
+document.getElementById('sample').href = tagged.href;
+document.getElementById('untagged').href = plain.href;
+Library.utmKeeper({ storageKey: 'utm-keeper-demo' });
+const tags = Library.get({ storageKey: 'utm-keeper-demo' });
+document.getElementById('tags').textContent = JSON.stringify(tags, null, 2);
+const hidden = [...document.querySelectorAll('#example input[type=hidden]')].map(input => ({ name: input.name, value: input.value }));
+document.getElementById('hidden').textContent = JSON.stringify(hidden, null, 2);
+let persistent = false;
+try { persistent = localStorage.getItem('utm-keeper-demo') !== null; } catch {}
+document.getElementById('storage').textContent = persistent ? 'Tags are saved in localStorage. Try the untagged link or reload.' : 'No persistent tags yet. Try the sample link; blocked storage falls back to this page’s memory.';
+document.getElementById('example').addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('submission').textContent = 'Local submission preview: ' + JSON.stringify(Object.fromEntries(new FormData(event.currentTarget)));
+});
+
+</script></body></html>
